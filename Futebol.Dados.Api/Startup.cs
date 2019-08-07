@@ -1,4 +1,5 @@
 ﻿using Futebol.Dados.Api.Models;
+using Futebol.Dados.Api.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,6 +31,8 @@ namespace Futebol.Dados.Api
 
             services.AddSingleton<IFutebolDatabaseSettings>(sp =>
                 sp.GetRequiredService<IOptions<FutebolDatabaseSettings>>().Value);
+
+            services.AddSingleton<JogoService>();
 
             services.AddMvc()
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
