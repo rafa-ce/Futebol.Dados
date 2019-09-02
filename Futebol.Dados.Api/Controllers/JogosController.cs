@@ -21,9 +21,9 @@ namespace Futebol.Dados.Api.Controllers
         }
 
         [HttpGet]
-        public ActionResult<List<Jogo>> Get()
+        public ActionResult<List<Jogo>> Get(int ano, int rodada)
         {
-            var jogo = _jogoService.Jogos(2012, 1);
+            var jogo = _jogoService.Jogos(ano, rodada);
 
             if (jogo == null)
                 return NotFound();
