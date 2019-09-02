@@ -5,9 +5,9 @@ namespace Futebol.Dados.Api.Models
     public class Time
     {
         [BsonElement("casa")]
-        public int Casa { get; set; }
+        public string Casa { get; set; }
 
         [BsonElement("fora")]
-        public int Fora { get; set; }
+        public string Fora { get; set; }
     }
 }

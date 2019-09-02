@@ -1,19 +1,23 @@
+using System;
 using System.Collections.Generic;
 using Futebol.Dados.Api.Models;
+using Futebol.Dados.Api.Repositories;
 using MongoDB.Driver;
 
 namespace Futebol.Dados.Api.Services
 {
     public class JogoService
     {
-        private readonly IMongoCollection<Jogo> _jogos;
+        private readonly JogoRepository _jogosRepository;
 
-        public JogoService(IFutebolDatabaseSettings settings)
+        public JogoService(JogoRepository jogoRepository)
         {
-            var client = new MongoClient(settings.ConnectionString);
-            var database = client.GetDatabase(settings.DatabaseName);
+            _jogosRepository = jogoRepository;
+        }
 
-            _jogos = database.GetCollection<Jogo>(settings.JogosCollectionName);
+        public List<Jogo> Jogos(int ano, int rodada)
+        {
+            return _jogosRepository.JogosAnoRodada(ano, rodada);
         }
     }
 }

@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
+using Futebol.Dados.Api.Repositories;
 
 namespace Futebol.Dados.Api
 {
@@ -32,9 +33,11 @@ namespace Futebol.Dados.Api
             services.AddSingleton<IFutebolDatabaseSettings>(sp =>
                 sp.GetRequiredService<IOptions<FutebolDatabaseSettings>>().Value);
 
-            services.AddSingleton<JogoService>();
+            services.AddScoped<JogoService>();
+            services.AddScoped<JogoRepository>();
 
             services.AddMvc()
+                .AddJsonOptions(opt => opt.UseMemberCasing())
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

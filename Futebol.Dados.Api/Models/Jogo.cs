@@ -34,5 +34,8 @@ namespace Futebol.Dados.Api.Models
         
         [BsonElement("local")]
         public Local Local { get; set; }
+
+        [BsonElement("ano")]
+        public int Ano { get; set; }
     }
 }
