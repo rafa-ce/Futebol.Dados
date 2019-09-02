@@ -12,6 +12,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using Futebol.Dados.Api.Repositories;
+using AutoMapper;
+using Futebol.Dados.Api.DTOs;
 
 namespace Futebol.Dados.Api
 {
@@ -35,6 +37,7 @@ namespace Futebol.Dados.Api
 
             services.AddScoped<JogoService>();
             services.AddScoped<JogoRepository>();
+            services.AddSingleton(ConfigureMapperConfiguration());
 
             services.AddMvc()
                 .AddJsonOptions(opt => opt.UseMemberCasing())
@@ -54,6 +57,23 @@ namespace Futebol.Dados.Api
             {
                 await context.Response.WriteAsync("Hello World!");
             });
+        }
+
+        IMapper ConfigureMapperConfiguration()
+        {
+            var config = new AutoMapper.MapperConfiguration(cfg =>
+            {
+                cfg.CreateMap<Jogo, JogoDTO>()
+                    .ForMember(dest => dest.TimeMandante, opt => opt.MapFrom(src => src.Times.Casa))
+                    .ForMember(dest => dest.TimeVisitante, opt => opt.MapFrom(src => src.Times.Fora))
+                    .ForMember(dest => dest.GolsMandante, opt => opt.MapFrom(src => src.Gols.Casa))
+                    .ForMember(dest => dest.GolsVisitante, opt => opt.MapFrom(src => src.Gols.Fora))
+                    .ForMember(dest => dest.Estadio, opt => opt.MapFrom(src => src.Local.Estadio))
+                    .ForMember(dest => dest.Cidade, opt => opt.MapFrom(src => src.Local.Cidade))
+                    .ForMember(dest => dest.UF, opt => opt.MapFrom(src => src.Local.Estado));
+            });
+
+            return config.CreateMapper();
         }
     }
 }

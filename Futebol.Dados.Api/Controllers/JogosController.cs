@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Futebol.Dados.Api.Models;
+using Futebol.Dados.Api.DTOs;
 using Futebol.Dados.Api.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -21,7 +21,7 @@ namespace Futebol.Dados.Api.Controllers
         }
 
         [HttpGet]
-        public ActionResult<List<Jogo>> Get(int ano, int rodada)
+        public ActionResult<List<JogoDTO>> Get(int ano, int rodada)
         {
             var jogo = _jogoService.Jogos(ano, rodada);
 
